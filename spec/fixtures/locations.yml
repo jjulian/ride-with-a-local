@@ -1,0 +1,9 @@
+one:
+  taxi_id: 1
+  lat: MyString
+  lon: MyString
+
+two:
+  taxi_id: 1
+  lat: MyString
+  lon: MyString

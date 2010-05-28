@@ -1,0 +1,20 @@
+- form_for @taxi do |f|
+  = f.error_messages
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+  %p
+    = f.label :handle
+    %br
+    = f.text_field :handle
+  %p
+    = f.label :phone
+    %br
+    = f.text_field :phone
+  %p
+    = f.label :description
+    %br
+    = f.text_field :description
+  %p
+    = f.submit

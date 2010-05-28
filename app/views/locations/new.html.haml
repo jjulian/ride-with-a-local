@@ -1,0 +1,20 @@
+- title "New Location"
+
+- form_for @location do |f|
+  = f.error_messages
+  %p
+    = f.label :taxi_id
+    %br
+    = f.text_field :taxi_id
+  %p
+    = f.label :lat
+    %br
+    = f.text_field :lat
+  %p
+    = f.label :lon
+    %br
+    = f.text_field :lon
+  %p
+    = f.submit
+
+
