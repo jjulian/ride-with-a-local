@@ -5,11 +5,17 @@ class LocationsController < ApplicationController
   
   def create
     @location = Location.new(params[:location])
-    if @location.save
-      flash[:notice] = "Successfully created location."
-      redirect_to root_url
-    else
-      render :action => 'new'
+    success = @location.save
+    respond_to do |format|
+      format.html do
+        if success
+          flash[:notice] = "Successfully created location."
+          redirect_to root_url
+        else
+          render :action => 'new'
+        end
+      end
+      format.json { render :json => {:success => success} }
     end
   end
 end
