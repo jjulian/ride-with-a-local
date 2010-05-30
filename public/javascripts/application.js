@@ -86,6 +86,7 @@ $(document).ready(function() {
     });
   }
 
+  /* icons from http://code.google.com/p/google-maps-icons/wiki/TransportationIcons */
   var map = new google.maps.Map(
     document.getElementById("map-container"), {
       zoom: 11,
