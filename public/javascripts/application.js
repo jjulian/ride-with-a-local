@@ -61,6 +61,7 @@ $(document).ready(function() {
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
             title: taxi.name,
+            icon: 'http://google-maps-icons.googlecode.com/files/taxi.png',
             map: map
           });
           overlays.push(marker);
@@ -87,11 +88,23 @@ $(document).ready(function() {
 
   var map = new google.maps.Map(
     document.getElementById("map-container"), {
-      zoom: 10,
+      zoom: 11,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
   });
   map.setCenter(new google.maps.LatLng(39.232253,-76.674271));
+  new google.maps.Marker({
+    position: new google.maps.LatLng(39.285596,-76.616212),
+    title: 'BWI',
+    map: map,
+    icon: 'http://google-maps-icons.googlecode.com/files/steamtrain.png'
+  });
+  new google.maps.Marker({
+    position: new google.maps.LatLng(39.173524,-76.670022),
+    title: 'BWI',
+    map: map,
+    icon: 'http://google-maps-icons.googlecode.com/files/airport.png'
+  });
   updateTaxis()
   setInterval(updateTaxis, 30000);
 
