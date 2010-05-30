@@ -5,6 +5,7 @@
     %title
       = h(yield(:title) || raise("No Page Title"))
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    %meta{:name => "viewport", :content => "width=device-width, target-densityDpi=device-dpi, user-scalable=no"}
     = stylesheet_link_tag 'application'
     %script{:src => 'http://maps.google.com/maps/api/js?sensor=true'}
     = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'application'

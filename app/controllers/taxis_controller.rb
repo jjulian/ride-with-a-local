@@ -17,6 +17,7 @@ class TaxisController < ApplicationController
   end
   
   def edit
-    @taxi = Taxi.find(params[:id])
+    @taxi = Taxi.find_by_api_key(params[:id])
+    render :text => 'invalid api key' unless @taxi
   end
 end
