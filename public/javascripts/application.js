@@ -46,7 +46,9 @@ $(document).ready(function() {
           var infowindow = new google.maps.InfoWindow({
             content: 
             "<h3>"+taxi.name+"</h3>"+
-            "<p>"+taxi.description+"</p>"
+            "<p>License No. "+taxi.license+"</p>"+
+            "<p>"+taxi.description+"</p>"+
+            "<img src='"+taxi.photo_url+"' alt='car photo'/>"
           });
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
