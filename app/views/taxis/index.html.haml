@@ -2,4 +2,28 @@
 
 #map-container
 %h1 Ride with a Local
+%h2#more-info= link_to_function 'Info', '$("#schedule-content").hide(); $("#more-info-content").toggle()'
+#more-info-content
+  %p Welcome to Ride with a Local!
+  %p
+    We are providing a number of volunteer-driven taxis to help
+    RailsConf attendees get to their hotels and also to the conference
+    center from BWI airport.
+  %p
+    On the map are the current location of our taxi drivers. These
+    locations will update automatically every 30 seconds.
 
+  %p= link_to 'View the taxi schedule and pickup locations', '#'
+
+%h2#schedule= link_to_function 'Schedule', '$("#more-info-content").hide(); $("#schedule-content").toggle()'
+#schedule-content
+  %p
+    Our taxi drivers are making the rounds as fast as they
+    can. We aim to have someone stop at each location at
+    least once every 30 minutes.
+  %p
+    Stop locations are:
+  %ul
+    %li A
+    %li B
+    %li C
