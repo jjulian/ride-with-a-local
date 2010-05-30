@@ -10,20 +10,25 @@
     RailsConf attendees get to their hotels and also to the conference
     center from BWI airport.
   %p
-    On the map are the current location of our taxi drivers. These
+    On the map are the current locations of our taxi drivers. These
     locations will update automatically every 30 seconds.
 
-  %p= link_to 'View the taxi schedule and pickup locations', '#'
+  -# %p= link_to 'View the taxi schedule and pickup locations', '#'
 
 %h2#schedule= link_to_function 'Schedule', '$("#more-info-content").hide(); $("#schedule-content").toggle()'
 #schedule-content
+  %p
+    The taxis are running Sunday June 6 and Monday June 7 from 12pm to 6pm.
   %p
     Our taxi drivers are making the rounds as fast as they
     can. We aim to have someone stop at each location at
     least once every 30 minutes.
   %p
-    Stop locations are:
+    Look for our taxis to have the red RailsConf logo posted in their windsheild.
+  %p
+    Stop locations are all on the "Ground Transportation" level:
   %ul
-    %li A
-    %li B
-    %li C
+    %li Outside baggage claim 6 (near the elevator)
+    %li Outside Baggage claim 14 (next to the international arrivals)
+
+= javascript_tag '$("#more-info-content").show();'
