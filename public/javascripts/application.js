@@ -26,7 +26,7 @@ $(document).ready(function() {
     });
   }
 
-  var overlays = []
+  var overlays = [];
 
   function updateTaxis() {
     $.ajax({
@@ -35,7 +35,7 @@ $(document).ready(function() {
       success: function(data, textStatus, xhr) {
         $.each(data.taxis, function(i) {
           var taxi = data.taxis[i];
-          $.each(overlays, function(i) { overlays[i].setMap(null) })
+          $.each(overlays, function(i) { overlays[i].setMap(null); });
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
             title: taxi.name,
@@ -59,8 +59,8 @@ $(document).ready(function() {
             })
           });
           overlays.push(trail);
-          trail.setMap(map)
-        })
+          trail.setMap(map);
+        });
       }
     });
   }
@@ -76,19 +76,19 @@ $(document).ready(function() {
         disableDefaultUI: true
     });
     map.setCenter(new google.maps.LatLng(39.232253,-76.674271));
-    new google.maps.Marker({
+    var m = new google.maps.Marker({
       position: new google.maps.LatLng(39.285596,-76.616212),
       title: 'BWI',
       map: map,
       icon: 'http://google-maps-icons.googlecode.com/files/steamtrain.png'
     });
-    new google.maps.Marker({
+    m = new google.maps.Marker({
       position: new google.maps.LatLng(39.173524,-76.670022),
       title: 'BWI',
       map: map,
       icon: 'http://google-maps-icons.googlecode.com/files/airport.png'
     });
-    updateTaxis()
+    updateTaxis();
     setInterval(updateTaxis, 30000);
   }
 
