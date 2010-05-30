@@ -1,15 +1,9 @@
 $(document).ready(function() {
 
-  function getGeo() {
-    if (navigator.geolocation) {
-      return navigator.geolocation; //iPhone Safari, FF3.5
-    }
-    if (window.google && google.gears) {
-      return google.gears.factory.create('beta.geolocation'); //Android, any gears installation
-    } else {
-      alert('This browser is not location-aware. Install Google Gears.');
-    }
-    return undefined;
+  function liveUpdatePosition() {
+    navigator.geolocation.watchPosition(function(position) {  
+      handlePosition(position);
+    });  
   }
 
   function handlePosition(position) {
@@ -24,29 +18,13 @@ $(document).ready(function() {
         }
       },
       success: function(data, textStatus, xhr) {
-        $('.spinner').fadeOut(150, function() {
-          $('.message').html('Your location was updated to ' + position.coords.latitude + ', ' + position.coords.longitude).fadeIn(150);
-        });
+        $('.message').html('Your location was updated to ' + position.coords.latitude + ', ' + position.coords.longitude).fadeIn(150);
       },
       error: function(xhr, textStatus) {
-        $('.spinner').fadeOut(150, function() {
-          $('.message').html('An error occurred - location not updated: ' + textStatus).fadeIn(150);
-        });
+        $('.message').html('An error occurred - location not updated: ' + textStatus).fadeIn(150);
       }
     });
   }
-
-  $('#location_submit').click(function() {
-    var geo = getGeo();
-    if (geo) {
-      $('.spinner').fadeIn(150);
-      geo.getCurrentPosition(handlePosition, function(error) {
-        $('.spinner').fadeOut(150);
-        alert("Sorry. I can't figure out where you are because an error occurred ("+error.code+").");
-      });
-    } 
-    return false;
-  });
 
   var overlays = []
 
@@ -80,33 +58,43 @@ $(document).ready(function() {
           });
           overlays.push(trail);
           trail.setMap(map)
-
         })
       }
     });
   }
 
-  /* icons from http://code.google.com/p/google-maps-icons/wiki/TransportationIcons */
-  var map = new google.maps.Map(
-    document.getElementById("map-container"), {
-      zoom: 11,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
-  });
-  map.setCenter(new google.maps.LatLng(39.232253,-76.674271));
-  new google.maps.Marker({
-    position: new google.maps.LatLng(39.285596,-76.616212),
-    title: 'BWI',
-    map: map,
-    icon: 'http://google-maps-icons.googlecode.com/files/steamtrain.png'
-  });
-  new google.maps.Marker({
-    position: new google.maps.LatLng(39.173524,-76.670022),
-    title: 'BWI',
-    map: map,
-    icon: 'http://google-maps-icons.googlecode.com/files/airport.png'
-  });
-  updateTaxis()
-  setInterval(updateTaxis, 30000);
+  var map;
 
+  function loadMap() {
+    /* icons from http://code.google.com/p/google-maps-icons/wiki/TransportationIcons */
+    map = new google.maps.Map(
+      document.getElementById("map-container"), {
+        zoom: 11,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+    });
+    map.setCenter(new google.maps.LatLng(39.232253,-76.674271));
+    new google.maps.Marker({
+      position: new google.maps.LatLng(39.285596,-76.616212),
+      title: 'BWI',
+      map: map,
+      icon: 'http://google-maps-icons.googlecode.com/files/steamtrain.png'
+    });
+    new google.maps.Marker({
+      position: new google.maps.LatLng(39.173524,-76.670022),
+      title: 'BWI',
+      map: map,
+      icon: 'http://google-maps-icons.googlecode.com/files/airport.png'
+    });
+    updateTaxis()
+    setInterval(updateTaxis, 30000);
+  }
+
+  if ($('#map-container').size() > 0) {
+    loadMap();
+  }
+
+  if ($('form#new_location').size() > 0) {
+    liveUpdatePosition();
+  }
 });
