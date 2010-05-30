@@ -48,7 +48,7 @@ $(document).ready(function() {
     return false;
   });
 
-  var markers = []
+  var overlays = []
 
   function updateTaxis() {
     $.ajax({
@@ -57,13 +57,13 @@ $(document).ready(function() {
       success: function(data, textStatus, xhr) {
         $.each(data.taxis, function(i) {
           var taxi = data.taxis[i];
-          $.each(markers, function(i) { markers[i].setMap(null) })
+          $.each(overlays, function(i) { overlays[i].setMap(null) })
           var marker = new google.maps.Marker({
             position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
             title: taxi.name,
             map: map
           });
-          markers.push(marker);
+          overlays.push(marker);
           var infowindow = new google.maps.InfoWindow({
             content: 
             "<h3>"+taxi.name+"</h3>"+
@@ -72,6 +72,14 @@ $(document).ready(function() {
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
           });
+          var trail = new google.maps.Polyline({
+            path: taxi.locations.map(function(loc) {
+              return new google.maps.LatLng(loc.lat, loc.lon); 
+            })
+          });
+          overlays.push(trail);
+          trail.setMap(map)
+
         })
       }
     });
