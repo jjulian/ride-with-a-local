@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(:version => 20100528031503) do
 
   create_table "taxis", :force => true do |t|
     t.string   "name"
-    t.string   "handle"
+    t.string   "license"
     t.string   "phone"
     t.string   "description"
+    t.string   "photo_url"
+    t.string   "api_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

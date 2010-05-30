@@ -1,17 +1,4 @@
 - title "Taxis"
 
-%table
-  %tr
-    %th Name
-    %th Handle
-    %th Phone
-    %th Description
-  - for taxi in @taxis
-    %tr
-      %td= h taxi.name
-      %td= h taxi.handle
-      %td= h taxi.phone
-      %td= h taxi.description
-      %td= link_to 'Edit', edit_taxi_path(taxi)
-
-%p= link_to "New Taxi", new_taxi_path
+#map-container
+%h1 Ride with a Local

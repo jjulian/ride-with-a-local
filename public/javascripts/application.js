@@ -13,7 +13,6 @@ $(document).ready(function() {
   }
 
   function handlePosition(position) {
-    console.log('Got it! '+position.coords.latitude + ', ' + position.coords.longitude);
     $.ajax({
       url: '/locations.json',
       type: 'POST',
@@ -38,19 +37,54 @@ $(document).ready(function() {
   }
 
   $('#location_submit').click(function() {
-    console.log('submit!');
     var geo = getGeo();
     if (geo) {
       $('.spinner').fadeIn(150);
       geo.getCurrentPosition(handlePosition, function(error) {
         $('.spinner').fadeOut(150);
-        console.log('error getting geolocation ('+error.message+') code: '+error.code);
         alert("Sorry. I can't figure out where you are because an error occurred ("+error.code+").");
       });
-    } else {
-      console.log('no geo :-(');
-    }
+    } 
     return false;
   });
+
+  var markers = []
+
+  function updateTaxis() {
+    $.ajax({
+      url: '/taxis.json',
+      type: 'GET',
+      success: function(data, textStatus, xhr) {
+        $.each(data.taxis, function(i) {
+          var taxi = data.taxis[i];
+          $.each(markers, function(i) { markers[i].setMap(null) })
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
+            title: taxi.name,
+            map: map
+          });
+          markers.push(marker);
+          var infowindow = new google.maps.InfoWindow({
+            content: 
+            "<h3>"+taxi.name+"</h3>"+
+            "<p>"+taxi.description+"</p>"
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+          });
+        })
+      }
+    });
+  }
+
+  var map = new google.maps.Map(
+    document.getElementById("map-container"), {
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
+  });
+  map.setCenter(new google.maps.LatLng(39.232253,-76.674271));
+  updateTaxis()
+  setInterval(updateTaxis, 30000);
 
 });

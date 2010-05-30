@@ -1,21 +1,15 @@
-!!! Strict
+!!! 
 %html{html_attrs}
   
   %head
     %title
-      = h(yield(:title) || "Untitled")
+      = h(yield(:title) || raise("No Page Title"))
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
     = stylesheet_link_tag 'application'
+    %script{:src => 'http://maps.google.com/maps/api/js?sensor=true'}
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'application'
     = yield(:head)
   
   %body
     #container
-      - flash.each do |name, msg|
-        = content_tag :div, msg, :id => "flash_#{name}"
-      
-      - if show_title?
-        %h1=h yield(:title)
-      
       = yield
-    %script{:src => 'http://maps.google.com/maps/api/js?sensor=true'}
-    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'application'
