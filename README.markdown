@@ -16,7 +16,7 @@ Clicking on a marker will show the drivers name, license number, and a picture o
 
 A driver can go to:
 
-/taxis/:api_key/location
+/taxis/:api_key/edit
 
 This is an HTML page that uses the browser's native geocoder to update their location every 30s. It also displays a map with a pin on where the driver was detected the last time their location was updated.
 
