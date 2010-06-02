@@ -4,16 +4,16 @@
 require 'digest'
 
 Taxi.create!([
-  { :name => 'Jonathan', :license => nil, :phone => '4438031427', :photo_url => '/images/jonathan-mini.jpg', :api_key => Digest.hexencode('jonathan'),
+  { :name => 'Jonathan', :license => nil, :phone => '443-803-1427', :photo_url => '/images/jonathan-mini.jpg', :api_key => Digest.hexencode('jonathan'),
     :description => 'Blue and black MINI Cooper S. I\'ll get you downtown fast, but I can only take one normal-sized and one small person.' },
   { :name => 'Nick', :license => nil, :phone => nil, :photo_url => '/images/ngauthier-car.jpg', :api_key => Digest.hexencode('nick'),
-    :description => 'temp' },
-  { :name => 'Yair', :license => nil, :phone => nil, :photo_url => nil, :api_key => Digest.hexencode('yair'),
-    :description => 'temp' },
-  { :name => 'Richard', :license => nil, :phone => nil, :photo_url => nil, :api_key => Digest.hexencode('richard'),
-    :description => 'temp' },
-  { :name => 'Josh', :license => nil, :phone => nil, :photo_url => nil, :api_key => Digest.hexencode('josh'),
-    :description => 'temp' },
-  { :name => 'Gordon', :license => nil, :phone => nil, :photo_url => nil, :api_key => Digest.hexencode('gordon'),
-    :description => 'temp' }
+    :description => 'Data Unavailable' },
+  { :name => 'Yair', :license => nil, :phone => nil, :photo_url => '/images/taxi_driver.jpg', :api_key => Digest.hexencode('yair'),
+    :description => 'Data Unavailable' },
+  { :name => 'Richard', :license => nil, :phone => nil, :photo_url => '/images/taxi_driver.jpg', :api_key => Digest.hexencode('richard'),
+    :description => 'Data Unavailable' },
+  { :name => 'Josh', :license => '37371CA', :phone => '413-346-7913', :photo_url => '/images/josh.jpg', :api_key => Digest.hexencode('josh'),
+    :description => 'Dark Gray 2010 Toyota Prius' },
+  { :name => 'Gordon', :license => '947 M341', :phone => '443-615-2084', :photo_url => '/images/gordon.jpg', :api_key => Digest.hexencode('gordon'),
+    :description => 'Lexus RX330 cream color' }
 ])
