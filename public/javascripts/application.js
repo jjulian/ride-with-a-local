@@ -99,4 +99,21 @@ $(document).ready(function() {
   if ($('form#new_location').size() > 0) {
     liveUpdatePosition();
   }
+
+  $("#schedule img").click(function() {
+    if ($("#schedule div").css('display') !== 'none') {
+      $("#schedule div").hide();
+    } else {
+      $("#info div").hide();
+      $("#schedule div").show();
+    }
+  });
+  $("#info img").click(function() {
+    if ($("#info div").css('display') !== 'none') {
+      $("#info div").hide();
+    } else {
+      $("#schedule div").hide();
+      $("#info div").show();
+    }
+  });
 });
