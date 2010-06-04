@@ -1,9 +1,16 @@
 $(document).ready(function() {
 
+  function geoApiInstance(){
+    if(google && google.gears){
+      return google.gears.factory.create('beta.geolocation');
+    } else {
+      return navigator.geolocation;
+    }
+  }
   function liveUpdatePosition() {
-    navigator.geolocation.watchPosition(function(position) {  
+    geoApiInstance().watchPosition(function(position) {  
       handlePosition(position);
-    });  
+    }, function(){}, {enableHighAccuracy: true});  
   }
 
   function handlePosition(position) {
