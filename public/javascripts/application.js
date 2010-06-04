@@ -36,30 +36,32 @@ $(document).ready(function() {
         $.each(data.taxis, function(i) {
           var taxi = data.taxis[i];
           $.each(overlays, function(i) { overlays[i].setMap(null); });
-          var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
-            title: taxi.name,
-            icon: 'http://google-maps-icons.googlecode.com/files/taxi.png',
-            map: map
-          });
-          overlays.push(marker);
-          var infowindow = new google.maps.InfoWindow({
-            content: 
-            "<h3>"+taxi.name+"</h3>"+
-            "<p>License No. "+taxi.license+"</p>"+
-            "<p>"+taxi.description+"</p>"+
-            "<img src='/ride-with-a-local"+taxi.photo_url+"' alt='car photo'/>"
-          });
-          google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-          });
-          var trail = new google.maps.Polyline({
-            path: taxi.locations.map(function(loc) {
-              return new google.maps.LatLng(loc.lat, loc.lon); 
-            })
-          });
-          overlays.push(trail);
-          trail.setMap(map);
+          if (taxi.locations.length > 0) {
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
+              title: taxi.name,
+              icon: 'http://google-maps-icons.googlecode.com/files/taxi.png',
+              map: map
+            });
+            overlays.push(marker);
+            var infowindow = new google.maps.InfoWindow({
+              content: 
+              "<h3>"+taxi.name+"</h3>"+
+              "<p>License No. "+taxi.license+"</p>"+
+              "<p>"+taxi.description+"</p>"+
+              "<img src='/ride-with-a-local"+taxi.photo_url+"' alt='car photo'/>"
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+              infowindow.open(map,marker);
+            });
+            var trail = new google.maps.Polyline({
+              path: taxi.locations.map(function(loc) {
+                return new google.maps.LatLng(loc.lat, loc.lon); 
+              })
+            });
+            overlays.push(trail);
+            trail.setMap(map);
+          }
         });
       }
     });
