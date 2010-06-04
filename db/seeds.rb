@@ -6,8 +6,8 @@ require 'digest'
 Taxi.create!([
   { :name => 'Jonathan', :license => nil, :phone => '443-803-1427', :photo_url => '/images/jonathan-mini.jpg', :api_key => Digest.hexencode('jonathan'),
     :description => 'Blue and black MINI Cooper S. I\'ll get you downtown fast, but I can only take one normal-sized and one small person.' },
-  { :name => 'Nick', :license => nil, :phone => nil, :photo_url => '/images/ngauthier-car.jpg', :api_key => Digest.hexencode('nick'),
-    :description => 'Data Unavailable' },
+  { :name => 'Nick', :license => '2EA-J46', :phone => nil, :photo_url => '/images/ngauthier-car.jpg', :api_key => Digest.hexencode('nick'),
+    :description => 'Red 2006 Mazda3' },
   { :name => 'Yair', :license => nil, :phone => nil, :photo_url => '/images/taxi_driver.jpg', :api_key => Digest.hexencode('yair'),
     :description => 'Data Unavailable' },
   { :name => 'Richard', :license => nil, :phone => nil, :photo_url => '/images/taxi_driver.jpg', :api_key => Digest.hexencode('richard'),
