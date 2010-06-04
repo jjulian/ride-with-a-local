@@ -4,3 +4,4 @@ log/*.*
 tmp/**/*
 db/*.sqlite3
 rerun.txt
+.*.swp
