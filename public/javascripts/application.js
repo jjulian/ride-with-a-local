@@ -8,7 +8,7 @@ $(document).ready(function() {
 
   function handlePosition(position) {
     $.ajax({
-      url: '/locations.json',
+      url: '/ride-with-a-local/locations.json',
       type: 'POST',
       data: {
         location: {
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
   function updateTaxis() {
     $.ajax({
-      url: '/taxis.json',
+      url: '/ride-with-a-local/taxis.json',
       type: 'GET',
       success: function(data, textStatus, xhr) {
         $.each(data.taxis, function(i) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
             "<h3>"+taxi.name+"</h3>"+
             "<p>License No. "+taxi.license+"</p>"+
             "<p>"+taxi.description+"</p>"+
-            "<img src='"+taxi.photo_url+"' alt='car photo'/>"
+            "<img src='/ride-with-a-local"+taxi.photo_url+"' alt='car photo'/>"
           });
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
