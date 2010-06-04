@@ -9,7 +9,7 @@ class TaxisController < ApplicationController
             :locations => t.locations.find(
               :all, :limit => 5,
               :order => 'locations.created_at desc'
-            ).collect(&:attributes)
+            ).collect {|l| {:lon => l.lon.to_f, :lat => l.lat.to_f}}
           )
         }}
       }

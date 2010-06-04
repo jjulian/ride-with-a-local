@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  var baseHref = '/ride-with-a-local';
+  var refresh = 30000;
   function geoApiInstance(){
     if(google && google.gears){
       return google.gears.factory.create('beta.geolocation');
@@ -15,7 +17,7 @@ $(document).ready(function() {
 
   function handlePosition(position) {
     $.ajax({
-      url: '/ride-with-a-local/locations.json',
+      url: baseHref + '/locations.json',
       type: 'POST',
       data: {
         location: {
@@ -33,41 +35,50 @@ $(document).ready(function() {
     });
   }
 
-  var overlays = [];
+  var overlays = {};
+  var trails = {};
 
   function updateTaxis() {
     $.ajax({
-      url: '/ride-with-a-local/taxis.json',
+      url: baseHref + '/taxis.json',
       type: 'GET',
       success: function(data, textStatus, xhr) {
         $.each(data.taxis, function(i) {
           var taxi = data.taxis[i];
-          $.each(overlays, function(i) { overlays[i].setMap(null); });
           if (taxi.locations.length > 0) {
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
-              title: taxi.name,
-              icon: '/ride-with-a-local/images/taxi.png',
-              map: map
-            });
-            overlays.push(marker);
-            var infowindow = new google.maps.InfoWindow({
-              content: 
-              "<h3>"+taxi.name+"</h3>"+
-              "<p>License No. "+taxi.license+"</p>"+
-              "<p>"+taxi.description+"</p>"+
-              "<img src='/ride-with-a-local"+taxi.photo_url+"' alt='car photo'/>"
-            });
-            google.maps.event.addListener(marker, 'click', function() {
-              infowindow.open(map,marker);
-            });
+            var marker = overlays[taxi.name];
+            if(!marker){
+              marker = new google.maps.Marker({
+                position: new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon),
+                title: taxi.name,
+                icon: baseHref + '/images/taxi.png',
+                map: map
+              });
+              overlays[taxi.name] = marker;
+              var infowindow = new google.maps.InfoWindow({
+                content: 
+                "<h3>"+taxi.name+"</h3>"+
+                "<p>License No. "+taxi.license+"</p>"+
+                "<p>"+taxi.description+"</p>"+
+                "<img src='"+baseHref+taxi.photo_url+"' alt='car photo'/>"
+              });
+              google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+              });
+            } else {
+              marker.setPosition(new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon));
+            }
+            for(var tax in trails){
+              trails[tax].setMap(null);
+            }
+            trails = {};
             var trail = new google.maps.Polyline({
               path: taxi.locations.map(function(loc) {
                 return new google.maps.LatLng(loc.lat, loc.lon); 
-              })
+              }),
+              map: map
             });
-            overlays.push(trail);
-            trail.setMap(map);
+            trails[taxi.name] = trail;
           }
         });
       }
@@ -89,16 +100,16 @@ $(document).ready(function() {
       position: new google.maps.LatLng(39.285596,-76.616212),
       title: 'BWI',
       map: map,
-      icon: '/ride-with-a-local/images/steamtrain.png'
+      icon: baseHref + '/images/steamtrain.png'
     });
     m = new google.maps.Marker({
       position: new google.maps.LatLng(39.173524,-76.670022),
       title: 'BWI',
       map: map,
-      icon: '/ride-with-a-local/images/airport.png'
+      icon: baseHref + '/images/airport.png'
     });
     updateTaxis();
-    setInterval(updateTaxis, 30000);
+    setInterval(updateTaxis, refresh);
   }
 
   if ($('#map-container').size() > 0) {
