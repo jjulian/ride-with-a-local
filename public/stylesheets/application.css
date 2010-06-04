@@ -27,7 +27,7 @@ p {
   color: #000;
 }
 #info img, #schedule img {
-  background-image: url("/images/yellow_background.png");
+  background-image: url("/ride-with-a-local/images/yellow_background.png");
   padding: 5px;
   float: right;
 }
@@ -44,7 +44,7 @@ p {
 }
 
 #info div, #schedule div {
-  background-image: url("/images/yellow_background.png");
+  background-image: url("/ride-with-a-local/images/yellow_background.png");
   padding: 10px;
   width: 237px;
   -moz-border-radius-topleft: 12px;
