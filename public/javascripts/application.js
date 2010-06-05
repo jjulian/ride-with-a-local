@@ -43,6 +43,10 @@ $(document).ready(function() {
       url: baseHref + '/taxis.json',
       type: 'GET',
       success: function(data, textStatus, xhr) {
+        for(var tax in trails){
+          trails[tax].setMap(null);
+        }
+        trails = {};
         $.each(data.taxis, function(i) {
           var taxi = data.taxis[i];
           if (taxi.locations.length > 0) {
@@ -68,10 +72,6 @@ $(document).ready(function() {
             } else {
               marker.setPosition(new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon));
             }
-            for(var tax in trails){
-              trails[tax].setMap(null);
-            }
-            trails = {};
             var trail = new google.maps.Polyline({
               path: taxi.locations.map(function(loc) {
                 return new google.maps.LatLng(loc.lat, loc.lon); 
