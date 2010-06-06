@@ -2,6 +2,13 @@ $(document).ready(function() {
 
   var baseHref = '/ride-with-a-local';
   var refresh = 30000;
+
+  var lastPosition = null;
+  $('input[type=radio]').click(function(){
+    $('#message').val($(this).val().replace(/^value/,""));
+    handlePosition(lastPosition);
+  });
+  $('#message').change(function(){ handlePosition(lastPosition); });
   function geoApiInstance(){
     if(google && google.gears){
       return google.gears.factory.create('beta.geolocation');
@@ -16,6 +23,7 @@ $(document).ready(function() {
   }
 
   function handlePosition(position) {
+    lastPosition = position;
     $.ajax({
       url: baseHref + '/locations.json',
       type: 'POST',
@@ -23,7 +31,8 @@ $(document).ready(function() {
         location: {
           taxi_id: $('#taxi_id').attr('value'),
           lat: position.coords.latitude,
-          lon: position.coords.longitude
+          lon: position.coords.longitude,
+          message: $('#message').val()
         }
       },
       success: function(data, textStatus, xhr) {
@@ -36,7 +45,16 @@ $(document).ready(function() {
   }
 
   var overlays = {};
+  var infoWindows = {};
   var trails = {};
+
+  function infoContent(taxi){
+    return "<h3>"+taxi.name+"</h3>"+
+           "<p>License No. "+taxi.license+"</p>"+
+           "<p>"+taxi.description+"</p>"+
+           "<p id=\"message_for_"+taxi.id+"\">"+taxi.locations[0].message+"</p>"+
+           "<img src='"+baseHref+taxi.photo_url+"' alt='car photo'/>";
+  }
 
   function updateTaxis() {
     $.ajax({
@@ -56,17 +74,15 @@ $(document).ready(function() {
               });
               overlays[taxi.name] = marker;
               var infowindow = new google.maps.InfoWindow({
-                content: 
-                "<h3>"+taxi.name+"</h3>"+
-                "<p>License No. "+taxi.license+"</p>"+
-                "<p>"+taxi.description+"</p>"+
-                "<img src='"+baseHref+taxi.photo_url+"' alt='car photo'/>"
+                content: infoContent(taxi)
               });
               google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map,marker);
               });
+              infoWindows[taxi.name] = infowindow;
             } else {
               marker.setPosition(new google.maps.LatLng(taxi.locations[0].lat, taxi.locations[0].lon));
+              infoWindows[taxi.name].setContent(infoContent(taxi));
             }
             for(var tax in trails){
               trails[tax].setMap(null);

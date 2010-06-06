@@ -10,3 +10,13 @@
   = hidden_field_tag :lon
   %p.message
 
+%p
+  = radio_button_tag :predefined_message, :value => "I'm on my way to the airport"
+  I'm on my way to the airport
+%p
+  = radio_button_tag :predefined_message, :value => "I'm taking passengers to Baltimore"
+  I'm taking passengers to Baltimore
+
+%p
+  = text_field_tag :message
+

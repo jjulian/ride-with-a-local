@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100528031503) do
+ActiveRecord::Schema.define(:version => 20100606150118) do
 
   create_table "locations", :force => true do |t|
     t.integer  "taxi_id"
@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20100528031503) do
     t.string   "lon"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message"
   end
 
   create_table "taxis", :force => true do |t|

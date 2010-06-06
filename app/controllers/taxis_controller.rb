@@ -8,8 +8,9 @@ class TaxisController < ApplicationController
           t.attributes.merge(
             :locations => t.locations.find(
               :all, :limit => 5,
+              :conditions => ['locations.created_at > ?', 30.minutes.ago],
               :order => 'locations.created_at desc'
-            ).collect {|l| {:lon => l.lon.to_f, :lat => l.lat.to_f}}
+            ).collect {|l| {:lon => l.lon.to_f, :lat => l.lat.to_f, :message => l.message}}
           )
         }}
       }
